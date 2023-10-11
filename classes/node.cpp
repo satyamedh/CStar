@@ -5,7 +5,7 @@
 #include "node.h"
 
 // Constructor
-node::node(location loc, bool start, bool end, bool obstacle) : loc(loc) {
+node::node(location loc, bool start, bool end, bool obstacle) {
     this->loc = loc;
     this->start = start;
     this->end = end;
@@ -13,6 +13,7 @@ node::node(location loc, bool start, bool end, bool obstacle) : loc(loc) {
 
     this->opened = false;
     this->closed = false;
+    this->solution = false;
 
     this->g = 0;
     this->h = 0;
@@ -43,7 +44,7 @@ void node::set_parent(node* parent_node) {
     this->parent = parent_node;
 }
 
-node *node::get_parent() {
+node *node::get_parent() const {
     return this->parent;
 }
 
@@ -54,16 +55,18 @@ bool node::operator==(const node& n) const {
 
 // Conversions
 state node::get_state() const {
-    if (start) {
+    if (solution) {
+        return SOLUTION;
+    } else if (start) {
         return START;
     } else if (end) {
         return END;
     } else if (obstacle) {
         return OBSTACLE;
-    } else if (opened) {
-        return OPENED;
     } else if (closed) {
         return CLOSED;
+    } else if (opened) {
+        return OPENED;
     } else {
         return TRAVERSABLE;
     }

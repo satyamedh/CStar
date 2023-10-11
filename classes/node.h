@@ -30,6 +30,8 @@ class node {
         bool opened{};
         bool closed{};
 
+        bool solution{};
+
         // Costs
         double g{};
         double h{};
@@ -45,7 +47,7 @@ class node {
         // Functions
         double calculate_costs(double parent_g, location end_loc);
         void set_parent(node* parent);
-        node* get_parent();
+        node* get_parent() const;
 
         // Operators
         bool operator==(const node& n) const;

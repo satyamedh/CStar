@@ -21,6 +21,8 @@ class location {
         std::string to_string() const;
 
         location(int x, int y, bool not_set);
+
+    location();
 };
 
 

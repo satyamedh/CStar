@@ -46,4 +46,10 @@ std::string location::to_string() const {
     return "(" + std::to_string(x) + ", " + std::to_string(y) + ")";
 }
 
+location::location() {
+    x = 0;
+    y = 0;
+    not_set = false;
+}
+
 
