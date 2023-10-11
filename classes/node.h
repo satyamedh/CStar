@@ -43,6 +43,7 @@ class node {
 
         // Constructor
         node(location loc, bool start, bool end, bool obstacle);
+        node();
 
         // Functions
         double calculate_costs(double parent_g, location end_loc);

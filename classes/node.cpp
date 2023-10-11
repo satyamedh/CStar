@@ -72,3 +72,18 @@ state node::get_state() const {
     }
 }
 
+node::node(){
+    // initialize the node with a default location - (0, 0)
+    this->loc = location(0, 0, false);
+    // initialize the node with default values
+    this->start = false;
+    this->end = false;
+    this->obstacle = false;
+    this->opened = false;
+    this->closed = false;
+    this->solution = false;
+    this->g = 0;
+    this->h = 0;
+    this->f = 0;
+    this->parent = nullptr;
+}

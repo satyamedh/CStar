@@ -3,26 +3,35 @@
 // include the location class
 #include "classes/datatypes/location.h"
 #include "classes/node.h"
+#include "classes/grid.h"
+#include "classes/utils.h"
 
 int main() {
-    // simple test of the node class
-    // Create two nodes, calculate the costs, and print the results
+    // Sample grid
+    int grid_base[5][5] = {
+            {2, 0, 0, 0, 0},
+            {0, 1, 1, 0, 0},
+            {0, 1, 1, 0, 0},
+            {0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 3}
+    };
 
-    // Create the nodes
-    location loc1(0, 0, false);
-    location loc2(1, 1, false);
-    node node1(loc1, false, false, false);
-    node node2(loc2, false, false, false);
+    location start(0, 0, false);
+    location end(4, 4, false);
 
-    // Set the parent of node2 to node1
-    node2.set_parent(&node1);
+    // convert the grid to an int**
+    int** grid_base_intstarstar = utils::createDynamicArray(5, 5);
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; ++j) {
+            grid_base_intstarstar[i][j] = grid_base[i][j];
+        }
+    }
 
-    // Calculate the costs
-    node2.calculate_costs(0, loc1);
+    // Create the grid
+    grid g(grid_base_intstarstar, 5, 5);
 
-    // Print the results
-    std::cout << "Node 1: " << node1.loc.to_string() << std::endl;
-    std::cout << "Node 2: " << node2.loc.to_string() << std::endl;
-    std::cout << "Node 2 parent: " << node2.get_parent()->loc.to_string() << std::endl;
-    std::cout << "Node 2 f: " << node2.f << std::endl;
+
+
+
+    return 0;
 }

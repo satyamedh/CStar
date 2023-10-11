@@ -9,4 +9,8 @@ add_executable(CStar main.cpp
         classes/datatypes/location.cpp
         classes/datatypes/location.h
         classes/grid.cpp
-        classes/grid.h)
+        classes/grid.h
+        classes/utils.cpp
+        classes/utils.h
+        classes/algorithm.cpp
+        classes/algorithm.h)

@@ -15,19 +15,21 @@ class grid {
         location end;
         // Grid base is a 2D array of a node state.
         // The node state is an enum defined in node.h
-        state** grid_base;
+        int** grid_base;
+        int width;
+        int height;
 
         // Grid is a 2D array of nodes, which is the actual grid
         node** real_grid;
 
         // Functions
-        node** create_grid(state**);
+        node** create_grid();
         node* get_node(location);
         node** get_neighbors(node*, bool include_diagonals = false);
         node** get_path(node*);
 
         // Constructor
-        grid(location start, location end, state** grid_base);
+        grid(int** grid_base, int width, int height);
 
         // Conversions
         std::string to_string() const;
