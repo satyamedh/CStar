@@ -2,7 +2,6 @@
 // Created by satyamedh on 11/10/23.
 //
 
-#include <vector>
 #include "grid.h"
 
 // Constructor
@@ -16,10 +15,10 @@ grid::grid(int** grid_base, int width, int height){
 
 // Functions
 node **grid::create_grid() {
-    // Create the grid. To do this we need to iterate through the grid base and create nodes for each location
-    node** grid = new node*[this->height];
+    // Create the grid_. To do this we need to iterate through the grid_ base and create nodes for each location
+    node** grid_ = new node*[this->height];
     for (int i = 0; i < this->height; i++) {
-        grid[i] = new node[this->width];
+        grid_[i] = new node[this->width];
         for (int j = 0; j < this->width; j++) {
             // Create the location
             location loc(j, i, false);
@@ -36,13 +35,13 @@ node **grid::create_grid() {
                 end = loc;
             }
 
-            // Add the node to the grid
-            grid[i][j] = n;
+            // Add the node to the grid_
+            grid_[i][j] = n;
         }
     }
 
-    return grid;
-
+    this->real_grid = grid_;
+    return grid_;
 }
 
 node *grid::get_node(location loc) {
@@ -77,24 +76,21 @@ node **grid::get_neighbors(node *n, bool include_diagonals) {
     return neighbors;
 }
 
-node **grid::get_path(node *n) {
+std::vector<node*> grid::get_path(node *n) {
     // I know this a bad way to do this, but I'm too lazy to do it the right way :P
     // Create a vector to store the path
-    int path_length = 0;
+    std::vector<node*> path;
 
-    // Get the path length
-    node* current_node = n;
-    while (!current_node->start) {
-        path_length++;
-        current_node = current_node->parent;
-    }
+    // Add the node to the path
+    path.push_back(n);
 
-    // Create the path
-    node** path = new node*[path_length];
-    while (!current_node->start) {
-        path[path_length - 1] = current_node;
-        path_length--;
-        current_node = current_node->parent;
+    // Get parents until the start node is reached
+    while (n->start) {
+        // Add the parent to the path
+        path.push_back(n->parent);
+
+        // Set the parent to the current node
+        n = n->parent;
     }
 
     return path;

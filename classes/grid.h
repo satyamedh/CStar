@@ -8,6 +8,7 @@
 
 #include "datatypes/location.h"
 #include "node.h"
+#include <vector>
 
 class grid {
     public:
@@ -26,7 +27,7 @@ class grid {
         node** create_grid();
         node* get_node(location);
         node** get_neighbors(node*, bool include_diagonals = false);
-        node** get_path(node*);
+        std::vector<node*> get_path(node*);
 
         // Constructor
         grid(int** grid_base, int width, int height);

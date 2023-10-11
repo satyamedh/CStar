@@ -5,6 +5,7 @@
 #include "classes/node.h"
 #include "classes/grid.h"
 #include "classes/utils.h"
+#include "classes/algorithm.h"
 
 int main() {
     // Sample grid
@@ -16,22 +17,20 @@ int main() {
             {0, 0, 0, 0, 3}
     };
 
-    location start(0, 0, false);
-    location end(4, 4, false);
+    // We will solve this grid using the A* algorithm(That I totally didn't use copilot for)
 
-    // convert the grid to an int**
-    int** grid_base_intstarstar = utils::createDynamicArray(5, 5);
+    // Convert the grid_base to a grid in int**
+    int** grid_base_ = utils::createDynamicArray(5, 5);
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; ++j) {
-            grid_base_intstarstar[i][j] = grid_base[i][j];
+            grid_base_[i][j] = grid_base[i][j];
         }
     }
 
-    // Create the grid
-    grid g(grid_base_intstarstar, 5, 5);
-
-
-
+    // Create the algorithm object
+    algorithm a(true, true);
+    a.populate_grid(grid_base_);
+    a.solve();
 
     return 0;
 }

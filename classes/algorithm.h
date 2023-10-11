@@ -7,20 +7,22 @@
 
 
 #include "grid.h"
+#include <vector>
 
 class algorithm {
     public:
         grid* g;
-        node** open_list;
-        node** closed_list;
+        // use vector instead of array
+        std::vector<node*> open_list;
+        std::vector<node*> closed_list;
         bool diagonal_movement_allowed;
         bool debug;
 
         bool solution_found;
-        node** solution_nodes;
+        std::vector<node*> solution_nodes;
 
         // Constructor
-        algorithm(grid* g, bool diagonal_movement_allowed, bool debug);
+        algorithm(bool diagonal_movement_allowed, bool debug);
 
         // Functions
         void populate_grid(int** grid_base);
@@ -29,7 +31,7 @@ class algorithm {
         void open_node(node* n);
         void close_node(node* n);
 
-        node** solve();
+        std::vector<node*> solve();
 
 };
 
