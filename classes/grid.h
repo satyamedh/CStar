@@ -36,6 +36,9 @@ class grid {
         // Conversions
         std::string to_string() const;
 
+        // Destructor
+        ~grid();
+
 
 };
 

@@ -132,3 +132,10 @@ std::string grid::to_string() const {
 
     return str;
 }
+
+grid::~grid() {
+    for (int i = 0; i < this->height; i++) {
+        delete[] this->real_grid[i];
+    }
+    delete[] this->real_grid;
+}
