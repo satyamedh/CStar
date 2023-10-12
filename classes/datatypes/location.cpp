@@ -26,11 +26,22 @@ void location::set_location(int x, int y) {
 }
 
 // Define the distance function.
-// Distance formula: sqrt((x2 - x1)^2 + (y2 - y1)^2)
+// 1 for horizontal or vertical, sqrt(2) for diagonal.(assume as 1.4)
 // This function takes a location object as an argument.
 // It returns the distance between the two locations.
 double location::distance(location loc) const {
-    return sqrt(pow(loc.x - x, 2) + pow(loc.y - y, 2));
+    // Check if the locations are the same
+    if (*this == loc) {
+        return 0;
+    }
+
+    // Check if the locations are diagonal
+    if (x != loc.x && y != loc.y) {
+        return 1.4;
+    }
+
+    // Otherwise, the locations are horizontal or vertical
+    return 1;
 }
 
 // Define the == operator.

@@ -103,7 +103,7 @@ std::vector<node*> grid::get_path(node *n) {
     path.push_back(n);
 
     // Get parents until the start node is reached
-    while (n->start) {
+    while (!n->start) {
         // Add the parent to the path
         path.push_back(n->parent);
 

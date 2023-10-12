@@ -87,3 +87,7 @@ node::node(){
     this->f = 0;
     this->parent = nullptr;
 }
+
+std::string node::to_string() const {
+    return "node(loc=" + this->loc.to_string() + ", start=" + std::to_string(this->start) + ", end=" + std::to_string(this->end) + ", obstacle=" + std::to_string(this->obstacle) + ", opened=" + std::to_string(this->opened) + ", closed=" + std::to_string(this->closed) + ", solution=" + std::to_string(this->solution) + ", g=" + std::to_string(this->g) + ", h=" + std::to_string(this->h) + ", f=" + std::to_string(this->f) + ", parent=" + (this->parent == nullptr ? "nullptr" : this->parent->loc.to_string()) + ")";
+}

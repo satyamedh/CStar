@@ -55,6 +55,7 @@ class node {
 
         // Conversions
         state get_state() const;
+        std::string to_string() const;
 
 };
 

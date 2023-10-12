@@ -80,6 +80,15 @@ void algorithm::close_node(node *n) {
         }
     }
 
+    // remove the node from the open list
+    // I know I should use vector.erase() but I'm too lazy so sorry
+    for (int i = 0; i < open_list.size(); i++) {
+        if (open_list[i] == n) {
+            open_list.erase(open_list.begin() + i);
+            break;
+        }
+    }
+
     // Add the node to the closed list
     closed_list.push_back(n);
     n->closed = true;
@@ -139,22 +148,35 @@ std::vector<node *> algorithm::solve() {
         for (int i = 0; i < (this->diagonal_movement_allowed?8:4); i++) { // 8 if diagonal movement is allowed, 4 otherwise
             // Check if the neighbor is null
             if (neighbors[i] == nullptr) {
+                // if debug is enabled, print a message
+                if (debug) {
+                    std::cout << "Neighbor " << i << " is null" << std::endl;
+                }
                 continue;
             }
 
             // Check if the neighbor is an obstacle
             if (neighbors[i]->obstacle) {
+                // if debug is enabled, print a message
+                if (debug) {
+                    std::cout << "Neighbor at (" << neighbors[i]->loc.x << ", " << neighbors[i]->loc.y << ") is an obstacle" << std::endl;
+                }
                 continue;
             }
 
             // Check if the neighbor is in the closed list
             if (neighbors[i]->closed) {
+                // if debug is enabled, print a message
                 continue;
             }
 
             // check if the neighbor already has a parent, and if it does, check if the current node is a
             // better parent
             if (neighbors[i]->parent == nullptr || neighbors[i]->g > ((current_node->g) + 1)) {
+                // if debug is enabled, print a message
+                if (debug) {
+                    std::cout << "Setting parent of node at (" << neighbors[i]->loc.x << ", " << neighbors[i]->loc.y << ") to (" << current_node->loc.x << ", " << current_node->loc.y << ")" << std::endl;
+                }
                 // Set the parent of the neighbor to the current node
                 neighbors[i]->set_parent(current_node);
                 // Calculate the new costs of the neighbor
