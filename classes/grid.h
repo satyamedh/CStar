@@ -31,6 +31,7 @@ class grid {
 
         // Constructor
         grid(int** grid_base, int width, int height);
+        grid();
 
         // Conversions
         std::string to_string() const;

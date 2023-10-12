@@ -7,7 +7,6 @@
 
 // Constructor
 algorithm::algorithm(bool diagonal_movement_allowed, bool debug) {
-    this->g = nullptr;
     this->diagonal_movement_allowed = diagonal_movement_allowed;
     this->debug = debug;
 
@@ -19,7 +18,7 @@ algorithm::algorithm(bool diagonal_movement_allowed, bool debug) {
 }
 
 // Functions
-void algorithm::populate_grid(int** grid_base) {
+void algorithm::populate_grid(int** grid_base, int width, int height) {
     // Populating the grid resets the solution flags and the open and closed lists
     this->solution_found = false;
     this->solution_nodes = std::vector<node*>();
@@ -27,26 +26,15 @@ void algorithm::populate_grid(int** grid_base) {
     this->open_list = std::vector<node*>();
     this->closed_list = std::vector<node*>();
 
-    // Verify the data
-    // 1. Check if the start and end nodes are set
-    if (g->start.x == -1 || g->start.y == -1 || g->end.x == -1 || g->end.y == -1) {
-        std::cout << "Start or end node not set" << std::endl;
-        return;
-    }
-
-    // 2. Check if the start and end nodes are in the grid
-    if (g->start.x < 0 || g->start.x >= g->width || g->start.y < 0 || g->start.y >= g->height) {
-        std::cout << "Start node not in grid" << std::endl;
-        return;
-    }
-    if (g->end.x < 0 || g->end.x >= g->width || g->end.y < 0 || g->end.y >= g->height) {
-        std::cout << "End node not in grid" << std::endl;
-        return;
-    }
-
     // Convert the grid base to a grid
-    g->grid_base = grid_base;
-    g->create_grid();
+    g = grid(grid_base, width, height);
+    g.create_grid();
+
+    // check if the grid was created successfully
+    if (g.real_grid == nullptr) {
+        std::cout << "Grid not created successfully. Are you sure you have a start and an end node?" << std::endl;
+        return;
+    }
 
 }
 
@@ -107,16 +95,16 @@ std::vector<node *> algorithm::solve() {
         return solution_nodes;
     }
     // Make sure the grid is populated
-    if (g->grid_base == nullptr) {
+    if (g.grid_base == nullptr) {
         std::cout << "Grid not populated" << std::endl;
         return {};
     }
 
     // Add the start node to the open list
-    open_node(g->get_node(g->start));
+    open_node(g.get_node(g.start));
 
     // Get the end node
-    node* end_node = g->get_node(g->end);
+    node* end_node = g.get_node(g.end);
 
     // Loop until the open list is empty
     while (!open_list.empty()){
@@ -137,7 +125,7 @@ std::vector<node *> algorithm::solve() {
             solution_found = true;
 
             // Get the path
-            std::vector<node*> path = g->get_path(current_node);
+            std::vector<node*> path = g.get_path(current_node);
 
             // Set the solution nodes
             solution_nodes = path;
@@ -147,7 +135,7 @@ std::vector<node *> algorithm::solve() {
         }
 
         // Get the neighbors of the current node
-        node** neighbors = g->get_neighbors(current_node, this->diagonal_movement_allowed);
+        node** neighbors = g.get_neighbors(current_node, this->diagonal_movement_allowed);
         for (int i = 0; i < (this->diagonal_movement_allowed?8:4); i++) { // 8 if diagonal movement is allowed, 4 otherwise
             // Check if the neighbor is null
             if (neighbors[i] == nullptr) {
@@ -170,11 +158,13 @@ std::vector<node *> algorithm::solve() {
                 // Set the parent of the neighbor to the current node
                 neighbors[i]->set_parent(current_node);
                 // Calculate the new costs of the neighbor
-                neighbors[i]->calculate_costs(current_node->g, g->end);
+                neighbors[i]->calculate_costs(current_node->g, g.end);
                 // Add the neighbor to the open list
                 open_node(neighbors[i]);
             }
         }
+        // Delete the neighbors array
+        delete[] neighbors;
     }
 
     // A solution was not found :(

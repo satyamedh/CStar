@@ -12,9 +12,19 @@ grid::grid(int** grid_base, int width, int height){
     this->real_grid = create_grid();
 }
 
+grid::grid() {
+    this->grid_base = nullptr;
+    this->width = 0;
+    this->height = 0;
+    this->real_grid = nullptr;
+}
+
+
 
 // Functions
 node **grid::create_grid() {
+    bool found_start = false;
+    bool found_end = false;
     // Create the grid_. To do this we need to iterate through the grid_ base and create nodes for each location
     node** grid_ = new node*[this->height];
     for (int i = 0; i < this->height; i++) {
@@ -30,14 +40,22 @@ node **grid::create_grid() {
             if (grid_base[i][j] == 2) {
                 n.start = true;
                 start = loc;
+                found_start = true;
             } else if (grid_base[i][j] == 3) {
                 n.end = true;
                 end = loc;
+                found_end = true;
             }
 
             // Add the node to the grid_
             grid_[i][j] = n;
         }
+
+    }
+
+
+    if (!found_start || !found_end) {
+        return nullptr;
     }
 
     this->real_grid = grid_;

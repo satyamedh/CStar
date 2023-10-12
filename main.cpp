@@ -29,7 +29,7 @@ int main() {
 
     // Create the algorithm object
     algorithm a(true, true);
-    a.populate_grid(grid_base_);
+    a.populate_grid(grid_base_, 5, 5);
     a.solve();
 
     return 0;

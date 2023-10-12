@@ -11,7 +11,7 @@
 
 class algorithm {
     public:
-        grid* g;
+        grid g;
         // use vector instead of array
         std::vector<node*> open_list;
         std::vector<node*> closed_list;
@@ -25,7 +25,7 @@ class algorithm {
         algorithm(bool diagonal_movement_allowed, bool debug);
 
         // Functions
-        void populate_grid(int** grid_base);
+        void populate_grid(int** grid_base, int width, int height);
 
         void sort_open_list();
         void open_node(node* n);
