@@ -56,7 +56,7 @@ int main() {
             }
 
             // print the node state as integers
-            if (in_solution) {
+            if (in_solution && n->get_state() != 2 && n->get_state() != 3) {
                 std::cout << 4 << " ";
             } else {
                 std::cout << n->get_state() << " ";
