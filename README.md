@@ -23,6 +23,9 @@ Finally, the [algorithm class](https://github.com/satyamedh/CStar/blob/master/cl
 Thank you for attending my ted talk.
 
 ## what's next?
-I shall get this to run on an esp32 for an upcoming competition
+~~I shall get this to run on an esp32 for an upcoming competition~~
+
+That... Never happened :')
+
 
 
